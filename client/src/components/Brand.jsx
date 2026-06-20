@@ -8,7 +8,7 @@ export default function Brand({ compact = false, light = false }) {
       </div>
       {!compact && (
         <div>
-          <div className={`font-display text-xl font-extrabold tracking-tight ${light ? 'text-white' : 'text-ink dark:text-white'}`}>Havenly</div>
+          <div className={`font-display text-xl font-extrabold tracking-tight ${light ? 'text-white' : 'text-ink dark:text-white'}`}>Smart Community</div>
           <div className={`text-[10px] font-bold uppercase tracking-[.18em] ${light ? 'text-blue-100' : 'text-slate-400'}`}>Smart Community</div>
         </div>
       )}

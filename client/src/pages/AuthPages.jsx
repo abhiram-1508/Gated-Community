@@ -27,7 +27,7 @@ export function LoginPage() {
   const navigate = useNavigate();
   const { loading, error } = useSelector((s) => s.auth);
   const [show, setShow] = useState(false);
-  const [form, setForm] = useState({ email: 'resident@havenly.demo', password: 'password123', demoRole: 'Resident' });
+  const [form, setForm] = useState({ email: 'resident@smartcommunity.demo', password: 'password123', demoRole: 'Resident' });
   const submit = async (e) => {
     e.preventDefault();
     const result = await dispatch(login(form));
@@ -42,7 +42,7 @@ export function LoginPage() {
       <label className="flex items-center gap-2 text-sm text-slate-500"><input type="checkbox" defaultChecked className="accent-brand-600"/> Remember me on this device</label>
       <button className="btn-primary w-full" disabled={loading}>{loading?<CircularProgress size={20} color="inherit"/>:<><LockKeyhole size={18}/> Sign in securely</>}</button>
     </form>
-    <p className="mt-7 text-center text-sm text-slate-500">New to Havenly? <Link to="/register" className="font-bold text-brand-600">Register your home</Link></p>
+    <p className="mt-7 text-center text-sm text-slate-500">New to Smart Community Management System? <Link to="/register" className="font-bold text-brand-600">Register your home</Link></p>
   </AuthFrame>;
 }
 

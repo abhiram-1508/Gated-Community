@@ -1,4 +1,4 @@
-# Havenly — Smart Community Management System
+# Smart Community Management System
 
 A full role-based MERN community management application for residents, administrators, security teams, and maintenance staff.
 
@@ -50,7 +50,7 @@ Set `VITE_DEMO_MODE=false` in `client/.env` when you want strict live-backend au
 
 ## Presentation assets
 
-- UI/UX board: `docs/assets/havenly-ui-ux-board.png`
+- UI/UX board: `docs/assets/smart-community-ui-ux-board.png`
 - System architecture diagram: `docs/assets/system-architecture.svg`
 - Architecture notes: `docs/ARCHITECTURE.md`
 

@@ -1,87 +1,201 @@
-# Havenly Smart Community — Project Architecture
+# Smart Community Management System — Project Architecture
 
-## System overview
-
-```mermaid
-flowchart LR
-  subgraph Clients
-    R[Resident web/PWA]
-    A[Admin console]
-    G[Security gate]
-    S[Maintenance workspace]
-  end
-
-  subgraph React["React + Vite client"]
-    RR[React Router]
-    RTK[Redux Toolkit]
-    UI[Tailwind + Material UI]
-    AX[Axios API client]
-    CH[Chart.js]
-    SOC[Socket.IO client]
-  end
-
-  subgraph Node["Node.js + Express API"]
-    AUTH[JWT authentication + RBAC]
-    API[REST controllers]
-    UP[File uploads]
-    JOBS[Scheduled jobs]
-    SIO[Socket.IO events]
-  end
-
-  subgraph Data
-    MDB[(MongoDB)]
-    FS[(Uploads)]
-  end
-
-  R & A & G & S --> RR
-  RR --> RTK --> UI
-  RR --> AX --> AUTH --> API --> MDB
-  API --> UP --> FS
-  JOBS --> MDB
-  SIO <--> SOC
-  API --> SIO
-  CH --> UI
+```text
+Smart-Community-Management-System/
+│
+├── client/                          # React Frontend
+│   ├── public/
+│   │   ├── favicon.ico
+│   │   ├── logo.png
+│   │   └── manifest.json
+│   │
+│   ├── src/
+│   │   ├── assets/
+│   │   │   ├── images/
+│   │   │   ├── icons/
+│   │   │   └── styles/
+│   │   │
+│   │   ├── components/
+│   │   │   ├── Navbar/
+│   │   │   ├── Sidebar/
+│   │   │   ├── Footer/
+│   │   │   ├── Cards/
+│   │   │   ├── Charts/
+│   │   │   ├── Tables/
+│   │   │   ├── Modals/
+│   │   │   ├── Buttons/
+│   │   │   ├── Forms/
+│   │   │   └── ProtectedRoute.jsx
+│   │   │
+│   │   ├── layouts/
+│   │   │   ├── AdminLayout.jsx
+│   │   │   ├── ResidentLayout.jsx
+│   │   │   ├── SecurityLayout.jsx
+│   │   │   └── MaintenanceLayout.jsx
+│   │   │
+│   │   ├── pages/
+│   │   │
+│   │   │   ├── Auth/
+│   │   │   │   ├── Login.jsx
+│   │   │   │   ├── Register.jsx
+│   │   │   │   └── ForgotPassword.jsx
+│   │   │   │
+│   │   │   ├── Dashboard/
+│   │   │   │   ├── ResidentDashboard.jsx
+│   │   │   │   ├── AdminDashboard.jsx
+│   │   │   │   ├── SecurityDashboard.jsx
+│   │   │   │   └── MaintenanceDashboard.jsx
+│   │   │   │
+│   │   │   ├── Residents/
+│   │   │   ├── Units/
+│   │   │   ├── Visitors/
+│   │   │   ├── Vehicles/
+│   │   │   ├── Complaints/
+│   │   │   ├── Payments/
+│   │   │   ├── Bookings/
+│   │   │   ├── Facilities/
+│   │   │   ├── Notices/
+│   │   │   ├── Forum/
+│   │   │   ├── Notifications/
+│   │   │   ├── Reports/
+│   │   │   ├── Profile/
+│   │   │   └── Settings/
+│   │   │
+│   │   ├── redux/
+│   │   │   ├── store.js
+│   │   │   ├── authSlice.js
+│   │   │   ├── userSlice.js
+│   │   │   ├── complaintSlice.js
+│   │   │   ├── visitorSlice.js
+│   │   │   ├── paymentSlice.js
+│   │   │   └── notificationSlice.js
+│   │   │
+│   │   ├── services/
+│   │   │   ├── authAPI.js
+│   │   │   ├── residentAPI.js
+│   │   │   ├── visitorAPI.js
+│   │   │   ├── complaintAPI.js
+│   │   │   ├── paymentAPI.js
+│   │   │   ├── bookingAPI.js
+│   │   │   └── noticeAPI.js
+│   │   │
+│   │   ├── hooks/
+│   │   │   ├── useAuth.js
+│   │   │   ├── useAxios.js
+│   │   │   └── useSocket.js
+│   │   │
+│   │   ├── utils/
+│   │   │   ├── constants.js
+│   │   │   ├── helper.js
+│   │   │   ├── validator.js
+│   │   │   └── formatDate.js
+│   │   │
+│   │   ├── routes/
+│   │   │   └── AppRoutes.jsx
+│   │   │
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
+│   ├── package.json
+│   └── vite.config.js
+│
+│
+├── server/                          # Node.js + Express Backend
+│   │
+│   ├── config/
+│   │   ├── db.js
+│   │   ├── jwt.js
+│   │   ├── cloudinary.js
+│   │   └── mailConfig.js
+│   │
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── residentController.js
+│   │   ├── visitorController.js
+│   │   ├── complaintController.js
+│   │   ├── paymentController.js
+│   │   ├── bookingController.js
+│   │   ├── noticeController.js
+│   │   ├── forumController.js
+│   │   └── adminController.js
+│   │
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Unit.js
+│   │   ├── Visitor.js
+│   │   ├── Vehicle.js
+│   │   ├── Complaint.js
+│   │   ├── Payment.js
+│   │   ├── Facility.js
+│   │   ├── Booking.js
+│   │   ├── Notice.js
+│   │   ├── ForumPost.js
+│   │   └── Notification.js
+│   │
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── residentRoutes.js
+│   │   ├── visitorRoutes.js
+│   │   ├── complaintRoutes.js
+│   │   ├── paymentRoutes.js
+│   │   ├── bookingRoutes.js
+│   │   ├── noticeRoutes.js
+│   │   ├── forumRoutes.js
+│   │   └── adminRoutes.js
+│   │
+│   ├── middleware/
+│   │   ├── authMiddleware.js
+│   │   ├── roleMiddleware.js
+│   │   ├── uploadMiddleware.js
+│   │   ├── errorMiddleware.js
+│   │   └── validateMiddleware.js
+│   │
+│   ├── services/
+│   │   ├── paymentService.js
+│   │   ├── smsService.js
+│   │   ├── emailService.js
+│   │   ├── notificationService.js
+│   │   ├── qrService.js
+│   │   └── socketService.js
+│   │
+│   ├── sockets/
+│   │   └── socket.js
+│   │
+│   ├── uploads/
+│   │   ├── profiles/
+│   │   ├── complaints/
+│   │   ├── receipts/
+│   │   └── documents/
+│   │
+│   ├── utils/
+│   │   ├── generateJWT.js
+│   │   ├── generateOTP.js
+│   │   ├── generateQR.js
+│   │   └── logger.js
+│   │
+│   ├── app.js
+│   ├── server.js
+│   └── package.json
+│
+│
+├── database/
+│   ├── seed.js
+│   ├── dummyData.js
+│   └── migrations/
+│
+├── docs/
+│   ├── API_Documentation.md
+│   ├── ER_Diagram.png
+│   ├── Architecture.png
+│   └── Project_Report.pdf
+│
+├── .env
+├── .gitignore
+├── README.md
+└── package.json
 ```
 
-## Frontend layers
+## Implementation note
 
-| Layer | Responsibility |
-|---|---|
-| Pages | Role-specific screens for residents, admins, guards, and maintenance staff |
-| Components | Shared shell, navigation, cards, status badges, dialogs, tables, and feedback |
-| Redux | Authentication session and global UI state |
-| Services | Axios client, JWT header injection, refresh-token retry |
-| Hooks | API loading with a safe presentation/demo fallback |
-| Data | Demo fixtures used only when the API is unavailable |
-
-## Role routing
-
-| Backend role | Product workspace |
-|---|---|
-| `Resident` | Visitors, complaints, payments, bookings, notices, vehicles, forum, profile |
-| `Guard` | Gate verification, visitor check-in/out, vehicle lookup, emergency command |
-| `Staff` | Assigned complaints, progress updates, completion workflow |
-| `Admin` / `SuperAdmin` | Analytics, residents and units, complaints, visitors, facilities, revenue, notices, reports |
-
-## API integration
-
-The client consumes the existing `/api/v1` API. Vite proxies `/api`, `/uploads`, and `/socket.io` to the Express server at port `5000` during development.
-
-Authentication uses access and refresh tokens. The Axios interceptor attaches access tokens and retries one failed request after a successful refresh. Demo sessions never send their placeholder token to the server.
-
-## Important implementation boundaries
-
-- Payment is recorded through the existing invoice payment endpoint; a production payment gateway still needs provider-side integration.
-- The AI assistant UI, delivery-specific logs, and translations require new backend contracts before production activation.
-- PDF receipt/report export is available client-side. Server-signed receipts can replace it later.
-- PWA metadata and a service worker can be added as a deployment hardening phase.
-
-## Local development
-
-1. Copy `.env.example` to `.env` and configure MongoDB/JWT values.
-2. Run the API with `npm run dev`.
-3. In `client`, copy `.env.example` to `.env`.
-4. Run the client with `npm run dev:client` from the repository root.
-5. Open `http://localhost:3000`.
-
-When the API is offline, the login screen can open any of the four demo workspaces so the complete UI remains presentable.
+The current working backend code is in `src/` and follows the same backend layers shown above: config, controllers, models, routes, middleware, jobs, utilities, uploads, and Socket.IO helpers. The architecture tree above is the clean presentation structure for the Smart Community Management System.

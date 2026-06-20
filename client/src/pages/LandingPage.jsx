@@ -30,7 +30,7 @@ export default function LandingPage() {
             <div>
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-bold text-brand-700 shadow-sm"><Sparkles size={16} /> One community. Beautifully connected.</div>
               <h1 className="font-display text-5xl font-extrabold leading-[1.05] tracking-[-.045em] sm:text-6xl lg:text-7xl">Everyday community life, <span className="text-brand-600">made effortless.</span></h1>
-              <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Havenly brings residents, management, security and service teams together—so your community feels safer, smoother and genuinely more connected.</p>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Smart Community Management System brings residents, management, security and service teams together—so your community feels safer, smoother and genuinely more connected.</p>
               <div className="mt-9 flex flex-wrap gap-3"><Link className="btn-primary" to="/login">Explore your dashboard <ArrowRight size={18} /></Link><a className="btn-secondary" href="#features">See what’s inside</a></div>
               <div className="mt-9 flex flex-wrap gap-5 text-sm font-semibold text-slate-500">{['Secure by design', 'Real-time updates', 'Mobile ready'].map(x => <span key={x} className="flex items-center gap-2"><CheckCircle2 size={17} className="text-emerald-500" />{x}</span>)}</div>
             </div>
@@ -61,7 +61,7 @@ export default function LandingPage() {
           </div>
         </section>
       </main>
-      <footer id="contact" className="border-t border-slate-100 bg-white py-10"><div className="mx-auto flex max-w-7xl flex-col justify-between gap-5 px-5 sm:flex-row sm:items-center"><Brand /><div className="text-sm text-slate-400">© 2026 Havenly Community Systems · hello@havenly.community</div></div></footer>
+      <footer id="contact" className="border-t border-slate-100 bg-white py-10"><div className="mx-auto flex max-w-7xl flex-col justify-between gap-5 px-5 sm:flex-row sm:items-center"><Brand /><div className="text-sm text-slate-400">© 2026 Smart Community Management System · contact@smartcommunity.local</div></div></footer>
     </div>
   );
 }
