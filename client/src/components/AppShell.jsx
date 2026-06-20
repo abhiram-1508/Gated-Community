@@ -8,7 +8,7 @@ import {
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Brand from './Brand';
-import { clearToast, setSidebar, toggleDark } from '../store/uiSlice';
+import { clearToast, setSidebar, showToast, toggleDark } from '../store/uiSlice';
 import { logout, switchDemoRole } from '../store/authSlice';
 
 const shared = [
@@ -24,15 +24,19 @@ const resident = [
   { to: '/app/vehicles', label: 'Vehicles', icon: Car },
   { to: '/app/forum', label: 'Community Forum', icon: MessageSquareText },
   { to: '/app/profile', label: 'My Profile', icon: UserRound },
+  { to: '/app/settings', label: 'Settings', icon: Wrench },
 ];
 const admin = [
-  { to: '/app/residents', label: 'Residents & Units', icon: Building },
+  { to: '/app/residents', label: 'Residents', icon: Building },
+  { to: '/app/units', label: 'Units', icon: Home },
   { to: '/app/complaints', label: 'Complaints', icon: ClipboardList },
   { to: '/app/visitors', label: 'Visitors', icon: UsersRound },
-  { to: '/app/bookings', label: 'Facilities', icon: CalendarDays },
+  { to: '/app/facilities', label: 'Facilities', icon: CalendarDays },
+  { to: '/app/bookings', label: 'Bookings', icon: CalendarDays },
   { to: '/app/payments', label: 'Revenue', icon: CircleDollarSign },
   { to: '/app/notices', label: 'Announcements', icon: BookOpen },
   { to: '/app/reports', label: 'Reports', icon: Wrench },
+  { to: '/app/settings', label: 'Settings', icon: Wrench },
 ];
 const guard = [
   { to: '/app/visitors', label: 'Visitor Gate', icon: ShieldCheck },

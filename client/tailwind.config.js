@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: { 50: '#EFF6FF', 100: '#DBEAFE', 500: '#3B82F6', 600: '#2563EB', 700: '#1D4ED8', 950: '#172554' },
+        brand: { 50: '#EFF6FF', 100: '#DBEAFE', 300: '#93C5FD', 500: '#3B82F6', 600: '#2563EB', 700: '#1D4ED8', 950: '#172554' },
         mint: { 50: '#ECFDF5', 500: '#10B981', 600: '#059669' },
         ink: '#172033',
         canvas: '#F6F8FC',

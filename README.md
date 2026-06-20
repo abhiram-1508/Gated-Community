@@ -14,7 +14,7 @@ A full role-based MERN community management application for residents, administr
 - Existing Express/MongoDB backend integration
 - Presentation-safe demo fallback when the API is offline
 - Architecture-aligned frontend folders for routes, layouts, Redux, services, hooks, utilities, assets, and reusable components
-- Project documentation, API summary, database seed placeholders, and presentation assets
+- Project documentation, API summary, and presentation assets
 
 ## Run
 
@@ -63,7 +63,6 @@ Set `VITE_DEMO_MODE=false` in `client/.env` when you want strict live-backend au
 client/      React + Vite frontend
 src/         Existing Express + MongoDB backend implementation
 server/      Architecture mapping note for the backend layer
-database/    Seed and migration placeholders
 docs/        Architecture, API notes, and presentation assets
 uploads/     Runtime upload folder
 ```
