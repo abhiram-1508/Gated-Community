@@ -13,6 +13,8 @@ A full role-based MERN community management application for residents, administr
 - Dark mode and mobile bottom navigation
 - Existing Express/MongoDB backend integration
 - Presentation-safe demo fallback when the API is offline
+- Architecture-aligned frontend folders for routes, layouts, Redux, services, hooks, utilities, assets, and reusable components
+- Project documentation, API summary, database seed placeholders, and presentation assets
 
 ## Run
 
@@ -53,6 +55,27 @@ Set `VITE_DEMO_MODE=false` in `client/.env` when you want strict live-backend au
 - UI/UX board: `docs/assets/smart-community-ui-ux-board.png`
 - System architecture diagram: `docs/assets/system-architecture.svg`
 - Architecture notes: `docs/ARCHITECTURE.md`
+- API notes: `docs/API_Documentation.md`
+
+## Main local structure
+
+```text
+client/      React + Vite frontend
+src/         Existing Express + MongoDB backend implementation
+server/      Architecture mapping note for the backend layer
+database/    Seed and migration placeholders
+docs/        Architecture, API notes, and presentation assets
+uploads/     Runtime upload folder
+```
+
+Useful scripts:
+
+```text
+npm run dev              Start backend
+npm run dev:client       Start frontend
+npm run build:client     Build frontend
+npm run install:client   Install frontend dependencies
+```
 
 ## Local Git note
 
