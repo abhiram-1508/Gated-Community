@@ -37,7 +37,7 @@ Start-Process powershell -ArgumentList @(
   "-NoExit",
   "-ExecutionPolicy", "Bypass",
   "-Command",
-  "cd `"$root`"; npm run dev"
+  "Set-Location '$root'; npm run dev"
 )
 
 Start-Sleep -Seconds 2
@@ -46,7 +46,7 @@ Start-Process powershell -ArgumentList @(
   "-NoExit",
   "-ExecutionPolicy", "Bypass",
   "-Command",
-  "cd `"$client`"; npm run dev"
+  "Set-Location '$client'; npm run dev"
 )
 
 Write-Host "`nBackend:  http://localhost:5000" -ForegroundColor Green
