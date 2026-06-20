@@ -1,0 +1,22 @@
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import { AlertTriangle, CalendarDays, Megaphone, Pin, Plus } from 'lucide-react';
+import PageHeader from '../components/PageHeader';
+import useApiData from '../hooks/useApiData';
+import api from '../services/api';
+import { demoNotices } from '../data/demo';
+import { showToast } from '../store/uiSlice';
+
+export default function NoticesPage(){
+  const role=useSelector(s=>s.auth.user?.role);const isAdmin=['Admin','SuperAdmin'].includes(role);
+  const {data,setData}=useApiData('/announcements',demoNotices);const notices=Array.isArray(data)?data:data.items||demoNotices;
+  const [open,setOpen]=useState(false);const [filter,setFilter]=useState('all');const [form,setForm]=useState({title:'',body:'',type:'notice',audience:'all',eventDate:'',isPinned:false});const dispatch=useDispatch();
+  const create=async(e)=>{e.preventDefault();let n;try{const {data:r}=await api.post('/announcements',form);n=r.data;}catch{n={...form,_id:`n-${Date.now()}`,createdAt:new Date().toISOString()};}setData([n,...notices]);setOpen(false);dispatch(showToast({message:'Announcement published'}));};
+  const visible=filter==='all'?notices:notices.filter(n=>n.type===filter);
+  return <><PageHeader eyebrow="Community updates" title="Notice board" description="Important announcements, upcoming events and urgent community alerts." action={isAdmin?<button onClick={()=>setOpen(true)} className="btn-primary"><Plus size={18}/> Create notice</button>:null}/>
+    <div className="mb-6 flex flex-wrap gap-2">{['all','notice','event','emergency'].map(x=><button key={x} onClick={()=>setFilter(x)} className={`rounded-full px-4 py-2 text-sm font-bold capitalize ${filter===x?'bg-brand-600 text-white':'bg-white text-slate-500 dark:bg-slate-900'}`}>{x}</button>)}</div>
+    <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">{visible.map(n=><article key={n._id} className={`card relative overflow-hidden p-6 ${n.type==='emergency'?'!border-red-200 bg-red-50/60 dark:bg-red-950/30':''}`}>{n.isPinned&&<div className="absolute right-5 top-5 text-brand-600"><Pin size={18}/></div>}<div className={`grid h-11 w-11 place-items-center rounded-2xl ${n.type==='emergency'?'bg-red-100 text-red-600':n.type==='event'?'bg-emerald-50 text-emerald-600':'bg-blue-50 text-brand-600'}`}>{n.type==='emergency'?<AlertTriangle/>:n.type==='event'?<CalendarDays/>:<Megaphone/>}</div><div className="mt-5 text-xs font-bold uppercase tracking-wider text-slate-400">{n.type} · {new Date(n.eventDate||n.createdAt||Date.now()).toLocaleDateString('en-IN',{dateStyle:'medium'})}</div><h2 className="mt-2 font-display text-xl font-bold">{n.title}</h2><p className="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400">{n.body}</p><button className="mt-5 text-sm font-bold text-brand-600">Read more →</button></article>)}</div>
+    <Dialog open={open} onClose={()=>setOpen(false)} fullWidth maxWidth="sm"><DialogContent className="!p-7"><h2 className="font-display text-2xl font-extrabold">Create announcement</h2><form onSubmit={create} className="mt-6 space-y-4"><label><span className="mb-2 block text-sm font-bold">Title</span><input required className="field" value={form.title} onChange={e=>setForm({...form,title:e.target.value})}/></label><label><span className="mb-2 block text-sm font-bold">Message</span><textarea required rows="5" className="field" value={form.body} onChange={e=>setForm({...form,body:e.target.value})}/></label><div className="grid gap-4 sm:grid-cols-2"><label><span className="mb-2 block text-sm font-bold">Type</span><select className="field" value={form.type} onChange={e=>setForm({...form,type:e.target.value})}><option>notice</option><option>event</option><option>emergency</option></select></label><label><span className="mb-2 block text-sm font-bold">Audience</span><select className="field" value={form.audience} onChange={e=>setForm({...form,audience:e.target.value})}><option value="all">Everyone</option><option value="residents">Residents</option><option value="staff">Staff</option><option value="guards">Security</option></select></label></div><label className="flex items-center gap-2 text-sm font-bold"><input type="checkbox" checked={form.isPinned} onChange={e=>setForm({...form,isPinned:e.target.checked})}/> Pin this notice</label><button className="btn-primary w-full">Publish announcement</button></form></DialogContent></Dialog></>;
+}

@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color: #172033; background: #f6f8fc; font-synthesis: none; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; min-height: 100vh; font-family: 'DM Sans', sans-serif; }
+button, input, textarea, select { font: inherit; }
+.dark body { background: #0c1220; color: #eef3ff; }
+.glass { background: rgba(255,255,255,.82); backdrop-filter: blur(18px); }
+.dark .glass { background: rgba(20,29,48,.88); }
+.card { @apply rounded-3xl border border-slate-200/70 bg-white shadow-card dark:border-slate-700/70 dark:bg-slate-900; }
+.eyebrow { @apply text-xs font-bold uppercase tracking-[0.18em] text-brand-600; }
+.page-title { @apply font-display text-2xl font-extrabold tracking-tight text-ink dark:text-white md:text-3xl; }
+.section-title { @apply font-display text-lg font-bold text-ink dark:text-white; }
+.field { @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100 dark:border-slate-700 dark:bg-slate-800 dark:focus:ring-brand-950; }
+.btn-primary { @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-600 px-5 py-3 font-semibold text-white shadow-lg shadow-brand-600/20 transition hover:-translate-y-0.5 hover:bg-brand-700; }
+.btn-secondary { @apply inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:border-brand-300 hover:text-brand-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200; }
+.status-dot { @apply inline-block h-2 w-2 rounded-full; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }

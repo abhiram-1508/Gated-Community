@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eff6ff"/><stop offset="1" stop-color="#f8fafc"/></linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2563eb"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#172033" flood-opacity=".12"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#94a3b8"/></marker>
+    <style>
+      .title{font:800 44px Manrope,Arial;fill:#172033}.sub{font:500 20px Arial;fill:#64748b}
+      .h{font:700 22px Arial;fill:#172033}.w{font:500 16px Arial;fill:#64748b}.white{fill:#fff}
+      .line{stroke:#94a3b8;stroke-width:3;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <text x="90" y="85" class="title">Havenly System Architecture</text>
+  <text x="90" y="122" class="sub">Role-based MERN platform · REST + real-time events</text>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="190" width="310" height="510" rx="30" fill="#fff"/>
+    <text x="120" y="245" class="h">Role workspaces</text>
+    <g transform="translate(115,285)">
+      <rect width="240" height="72" rx="18" fill="#eff6ff"/><circle cx="38" cy="36" r="18" fill="#2563eb"/><text x="72" y="31" class="h" font-size="18">Resident</text><text x="72" y="53" class="w" font-size="14">Self-service & community</text>
+      <rect y="92" width="240" height="72" rx="18" fill="#ecfdf5"/><circle cx="38" cy="128" r="18" fill="#10b981"/><text x="72" y="123" class="h" font-size="18">Admin</text><text x="72" y="145" class="w" font-size="14">Operations & analytics</text>
+      <rect y="184" width="240" height="72" rx="18" fill="#fff7ed"/><circle cx="38" cy="220" r="18" fill="#f97316"/><text x="72" y="215" class="h" font-size="18">Security</text><text x="72" y="237" class="w" font-size="14">Gate access & safety</text>
+      <rect y="276" width="240" height="72" rx="18" fill="#f5f3ff"/><circle cx="38" cy="312" r="18" fill="#8b5cf6"/><text x="72" y="307" class="h" font-size="18">Maintenance</text><text x="72" y="329" class="w" font-size="14">Tasks & resolution</text>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="510" y="170" width="420" height="550" rx="32" fill="url(#blue)"/>
+    <text x="555" y="230" class="h white">React application</text>
+    <text x="555" y="260" font-family="Arial" font-size="16" fill="#bfdbfe">Vite · responsive web experience</text>
+    <g transform="translate(550,305)">
+      <rect width="340" height="72" rx="18" fill="#ffffff" fill-opacity=".12"/><text x="24" y="31" font-family="Arial" font-weight="700" font-size="18" fill="#fff">React Router</text><text x="24" y="54" font-family="Arial" font-size="14" fill="#dbeafe">Protected role-aware navigation</text>
+      <rect y="92" width="340" height="72" rx="18" fill="#ffffff" fill-opacity=".12"/><text x="24" y="123" font-family="Arial" font-weight="700" font-size="18" fill="#fff">Redux Toolkit</text><text x="24" y="146" font-family="Arial" font-size="14" fill="#dbeafe">Session and global interface state</text>
+      <rect y="184" width="340" height="72" rx="18" fill="#ffffff" fill-opacity=".12"/><text x="24" y="215" font-family="Arial" font-weight="700" font-size="18" fill="#fff">Tailwind + Material UI</text><text x="24" y="238" font-family="Arial" font-size="14" fill="#dbeafe">Design system and accessible controls</text>
+      <rect y="276" width="340" height="72" rx="18" fill="#ffffff" fill-opacity=".12"/><text x="24" y="307" font-family="Arial" font-weight="700" font-size="18" fill="#fff">Axios + Chart.js + Socket.IO</text><text x="24" y="330" font-family="Arial" font-size="14" fill="#dbeafe">Data, analytics and live notifications</text>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1050" y="170" width="460" height="360" rx="32" fill="#fff"/>
+    <text x="1095" y="230" class="h">Express application API</text>
+    <g transform="translate(1090,275)">
+      <rect width="175" height="92" rx="18" fill="#eff6ff"/><text x="20" y="38" class="h" font-size="17">JWT + RBAC</text><text x="20" y="64" class="w" font-size="14">Protected routes</text>
+      <rect x="195" width="175" height="92" rx="18" fill="#ecfdf5"/><text x="215" y="38" class="h" font-size="17">REST modules</text><text x="215" y="64" class="w" font-size="14">Domain controllers</text>
+      <rect y="112" width="175" height="92" rx="18" fill="#fff7ed"/><text x="20" y="150" class="h" font-size="17">Scheduled jobs</text><text x="20" y="176" class="w" font-size="14">Invoices & cleanup</text>
+      <rect x="195" y="112" width="175" height="92" rx="18" fill="#f5f3ff"/><text x="215" y="150" class="h" font-size="17">Socket.IO</text><text x="215" y="176" class="w" font-size="14">Live role events</text>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1050" y="590" width="220" height="130" rx="28" fill="#172033"/><text x="1090" y="645" font-family="Arial" font-weight="700" font-size="21" fill="#fff">MongoDB</text><text x="1090" y="677" font-family="Arial" font-size="15" fill="#94a3b8">Community data</text>
+    <rect x="1290" y="590" width="220" height="130" rx="28" fill="#fff"/><text x="1330" y="645" class="h">File storage</text><text x="1330" y="677" class="w">Images & uploads</text>
+  </g>
+
+  <path class="line" d="M390 445 H500"/>
+  <path class="line" d="M930 445 H1040"/>
+  <path class="line" d="M1160 530 V580"/>
+  <path class="line" d="M1395 530 V580"/>
+  <text x="427" y="424" class="w" font-size="14">responsive UI</text>
+  <text x="956" y="424" class="w" font-size="14">HTTPS / JSON</text>
+  <text x="90" y="820" class="sub">Security: Helmet · rate limiting · sanitization · validation · audit logs</text>
+</svg>
