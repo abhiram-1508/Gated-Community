@@ -16,12 +16,14 @@ A full role-based MERN community management application for residents, administr
 
 ## Run
 
+Install and start the backend from the project root:
+
 ```text
 npm install
 npm run dev
 ```
 
-In another terminal:
+Install and start the frontend in another terminal:
 
 ```text
 cd client
@@ -29,6 +31,35 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open:
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the complete architecture.
+```text
+http://localhost:3000
+```
+
+## Frontend demo access
+
+The React app can run in presentation/demo mode even when the backend is offline. On the login page, choose a role and sign in with any email/password to preview:
+
+- Resident dashboard and resident services
+- Admin analytics and management
+- Security visitor verification
+- Maintenance staff task tracking
+
+Set `VITE_DEMO_MODE=false` in `client/.env` when you want strict live-backend authentication only.
+
+## Presentation assets
+
+- UI/UX board: `docs/assets/havenly-ui-ux-board.png`
+- System architecture diagram: `docs/assets/system-architecture.svg`
+- Architecture notes: `docs/ARCHITECTURE.md`
+
+## Local Git note
+
+This folder uses `.git-work` for Git metadata because Windows blocked creation of the normal `.git` metadata during setup. Use the helper script for local Git commands:
+
+```powershell
+.\git-local.ps1 status
+.\git-local.ps1 log --oneline
+.\git-local.ps1 push -u origin main
+```
