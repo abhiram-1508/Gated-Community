@@ -12,7 +12,6 @@ A full role-based MERN community management application for residents, administr
 - Notices, facilities, bookings, vehicles, forum, notifications, profiles, reports, and emergency alerts
 - Dark mode and mobile bottom navigation
 - Existing Express/MongoDB backend integration
-- Presentation-safe demo fallback when the API is offline
 - Architecture-aligned frontend folders for routes, layouts, Redux, services, hooks, utilities, assets, and reusable components
 - Project documentation, API summary, and presentation assets
 
@@ -38,17 +37,6 @@ Open:
 ```text
 http://localhost:3000
 ```
-
-## Frontend demo access
-
-The React app can run in presentation/demo mode even when the backend is offline. On the login page, choose a role and sign in with any email/password to preview:
-
-- Resident dashboard and resident services
-- Admin analytics and management
-- Security visitor verification
-- Maintenance staff task tracking
-
-Set `VITE_DEMO_MODE=false` in `client/.env` when you want strict live-backend authentication only.
 
 ## Presentation assets
 

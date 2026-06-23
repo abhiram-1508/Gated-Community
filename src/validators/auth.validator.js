@@ -6,6 +6,7 @@ const registerSchema = Joi.object({
   phone: Joi.string().pattern(/^[0-9+\-\s()]{7,20}$/).optional(),
   password: Joi.string().min(8).max(64).required(),
   unitId: Joi.string().hex().length(24).optional(),
+  unitNumber: Joi.string().trim().min(2).max(80).optional(),
 });
 
 const loginSchema = Joi.object({

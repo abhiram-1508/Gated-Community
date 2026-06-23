@@ -5,7 +5,7 @@ export default function useSocket(token) {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    if (!token || token === 'demo-token') return undefined;
+    if (!token) return undefined;
     const instance = io('/', { auth: { token }, transports: ['websocket'] });
     setSocket(instance);
     return () => instance.disconnect();

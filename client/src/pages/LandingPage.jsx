@@ -39,9 +39,9 @@ export default function LandingPage() {
               <div className="relative rounded-[2rem] border border-white bg-white p-3 shadow-[0_35px_90px_rgba(37,99,235,.18)]">
                 <div className="rounded-[1.5rem] bg-slate-950 p-5 text-white">
                   <div className="flex items-center justify-between"><Brand light /><span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold text-emerald-300">All systems live</span></div>
-                  <div className="mt-9"><div className="text-sm text-slate-400">Good morning, Abhiram</div><div className="mt-1 font-display text-2xl font-bold">Here’s your community today.</div></div>
+                  <div className="mt-9"><div className="text-sm text-slate-400">Good morning</div><div className="mt-1 font-display text-2xl font-bold">Here is your community today.</div></div>
                   <div className="mt-6 grid grid-cols-2 gap-3">{[['₹2,500','Outstanding'],['02','Visitors today'],['01','Open request'],['03','Bookings']].map(([v,l],i)=><div key={l} className={`rounded-2xl p-4 ${i===0?'bg-brand-600':'bg-white/5'}`}><div className="font-display text-xl font-extrabold">{v}</div><div className="mt-1 text-xs text-slate-300">{l}</div></div>)}</div>
-                  <div className="mt-5 rounded-2xl bg-white p-4 text-ink"><div className="flex items-start justify-between"><div><div className="text-xs font-bold uppercase tracking-wider text-brand-600">Visitor arriving</div><div className="mt-1 font-bold">Kiran Shah · 11:30 AM</div><div className="text-xs text-slate-400">Family visit · Gate 1</div></div><div className="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600"><BadgeCheck /></div></div></div>
+                  <div className="mt-5 rounded-2xl bg-white p-4 text-ink"><div className="flex items-start justify-between"><div><div className="text-xs font-bold uppercase tracking-wider text-brand-600">Verified entry</div><div className="mt-1 font-bold">Secure visitor pass</div><div className="text-xs text-slate-400">QR and OTP gate access</div></div><div className="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600"><BadgeCheck /></div></div></div>
                 </div>
               </div>
               <div className="absolute -bottom-6 -left-8 hidden rounded-2xl bg-white p-4 shadow-xl sm:block"><div className="flex items-center gap-3"><div className="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600"><UsersRound /></div><div><div className="text-xs text-slate-400">Residents connected</div><div className="font-display text-xl font-extrabold">1,250+</div></div></div></div>
@@ -56,7 +56,7 @@ export default function LandingPage() {
 
         <section id="community" className="bg-slate-950 py-24 text-white">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2">
-            <div><Quote className="text-brand-400" size={40}/><blockquote className="mt-7 font-display text-3xl font-bold leading-snug">“We stopped chasing updates across five WhatsApp groups. Everything residents need is now calm, clear and in one place.”</blockquote><div className="mt-6 text-slate-400">— Residents Committee, Skyline Enclave</div></div>
+            <div><Quote className="text-brand-400" size={40}/><blockquote className="mt-7 font-display text-3xl font-bold leading-snug">Everything residents need is now calm, clear and in one place.</blockquote><div className="mt-6 text-slate-400">Residents committee</div></div>
             <div className="grid grid-cols-2 gap-4">{[['42%','faster issue resolution'],['3×','quicker gate entry'],['98%','digital collections'],['24/7','community visibility']].map(([v,l])=><div className="rounded-3xl border border-white/10 bg-white/5 p-6"><div className="font-display text-4xl font-extrabold text-emerald-400">{v}</div><div className="mt-2 text-sm text-slate-400">{l}</div></div>)}</div>
           </div>
         </section>

@@ -2,10 +2,11 @@ import { CalendarDays, Clock, UsersRound } from 'lucide-react';
 import PageHeader from '../../components/PageHeader';
 import StatusBadge from '../../components/StatusBadge';
 import useApiData from '../../hooks/useApiData';
-import { demoFacilities } from '../../data/demo';
+import { asList } from '../../utils/apiData';
 
 export default function FacilitiesPage() {
-  const { data: facilities } = useApiData('/facilities', demoFacilities);
+  const { data } = useApiData('/facilities', []);
+  const facilities = asList(data);
 
   return (
     <>
@@ -28,7 +29,7 @@ export default function FacilitiesPage() {
               </div>
               <div className="mt-5 grid gap-3 text-sm text-slate-500">
                 <div className="flex items-center gap-2"><UsersRound size={16} /> Capacity {facility.capacity || 20}</div>
-                <div className="flex items-center gap-2"><Clock size={16} /> 6:00 AM - 10:00 PM</div>
+                <div className="flex items-center gap-2"><Clock size={16} /> {facility.openHours?.start || '06:00'} - {facility.openHours?.end || '22:00'}</div>
                 <div className="flex items-center gap-2"><CalendarDays size={16} /> Advance booking supported</div>
               </div>
               <button className="mt-5 w-full rounded-2xl bg-brand-600 px-4 py-3 font-bold text-white">Book facility</button>

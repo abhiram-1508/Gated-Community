@@ -26,6 +26,74 @@ const listUsers = async (req, res) => {
   });
 };
 
+const parseUnitCode = (value) => {
+  const normalized = String(value || '').trim().toUpperCase();
+  if (!normalized) return null;
+  const lastToken = normalized.split(/\s+/).at(-1);
+  const match = lastToken.match(/^([A-Z]+)[-\s]?([0-9][A-Z0-9-]*)$/);
+  if (match) return { blockName: match[1], unitNumber: match[2].replace(/^-/, '') };
+  return { blockName: 'GENERAL', unitNumber: normalized.replace(/\s+/g, '-') };
+};
+
+const createUser = async (req, res) => {
+  const {
+    name, email, phone, password = 'password123', role = 'Resident',
+    status = 'active', unitId, unitNumber,
+  } = req.body;
+
+  if (!name || !email) return sendError(res, 'Name and email are required', null, 400);
+  const allowedRoles = ['SuperAdmin', 'Admin', 'Resident', 'Guard', 'Staff'];
+  if (!allowedRoles.includes(role)) return sendError(res, 'Invalid role', null, 400);
+  if (!['pending', 'active', 'suspended', 'deactivated'].includes(status)) {
+    return sendError(res, 'Invalid status', null, 400);
+  }
+
+  const existing = await User.findOne({ email: email.toLowerCase(), isDeleted: false });
+  if (existing) return sendError(res, 'Email already registered', null, 409);
+
+  const passwordHash = await User.hashPassword(password);
+  const user = await User.create({ name, email, phone, passwordHash, role, status });
+
+  let unit = null;
+  if (unitId) unit = await Unit.findById(unitId);
+  if (!unit && unitNumber) {
+    const parsed = parseUnitCode(unitNumber);
+    if (parsed) {
+      unit = await Unit.findOneAndUpdate(
+        { blockName: parsed.blockName, unitNumber: parsed.unitNumber },
+        {
+          blockName: parsed.blockName,
+          unitNumber: parsed.unitNumber,
+          owner: role === 'Resident' ? user._id : undefined,
+          occupancyStatus: role === 'Resident' ? 'owner-occupied' : 'vacant',
+          isActive: true,
+        },
+        { upsert: true, new: true, setDefaultsOnInsert: true },
+      );
+    }
+  }
+
+  if (role === 'Resident' && unit) {
+    await Unit.findByIdAndUpdate(unit._id, { owner: user._id, occupancyStatus: 'owner-occupied' });
+    await ResidentProfile.findOneAndUpdate(
+      { user: user._id },
+      { user: user._id, unit: unit._id },
+      { upsert: true, new: true, setDefaultsOnInsert: true },
+    );
+  }
+
+  await AuditLog.create({
+    actor: req.user._id,
+    actorEmail: req.user.email,
+    action: 'CREATE_USER',
+    entity: 'User',
+    entityId: user._id,
+    ip: req.ip,
+  });
+
+  return sendSuccess(res, 'User created', user, 201);
+};
+
 const getUserById = async (req, res) => {
   const user = await User.findOne({ _id: req.params.id, isDeleted: false });
   if (!user) return sendError(res, 'User not found', null, 404);
@@ -192,7 +260,7 @@ const updateUnit = async (req, res) => {
 };
 
 module.exports = {
-  listUsers, getUserById, approveUser, updateUserStatus, updateUserRole, deleteUser,
+  listUsers, createUser, getUserById, approveUser, updateUserStatus, updateUserRole, deleteUser,
   getMyProfile, updateMyProfile, addTenant,
   listUnits, createUnit, updateUnit,
 };

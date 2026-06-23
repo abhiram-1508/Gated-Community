@@ -1,20 +1,52 @@
 const User = require('../models/User');
+const Unit = require('../models/Unit');
 const ResidentProfile = require('../models/ResidentProfile');
 const { signAccessToken, signRefreshToken, verifyRefreshToken } = require('../utils/jwt');
 const { generateResetToken, hashToken } = require('../utils/otp');
 const { sendSuccess, sendError } = require('../utils/response');
 
+const parseUnitCode = (value) => {
+  const normalized = String(value || '').trim().toUpperCase();
+  if (!normalized) return null;
+
+  const lastToken = normalized.split(/\s+/).at(-1);
+  const match = lastToken.match(/^([A-Z]+)[-\s]?([0-9][A-Z0-9-]*)$/);
+  if (match) return { blockName: match[1], unitNumber: match[2].replace(/^-/, '') };
+
+  return { blockName: 'GENERAL', unitNumber: normalized.replace(/\s+/g, '-') };
+};
+
+const resolveRegistrationUnit = async ({ unitId, unitNumber }) => {
+  if (unitId) return Unit.findById(unitId);
+  const parsed = parseUnitCode(unitNumber);
+  if (!parsed) return null;
+
+  return Unit.findOneAndUpdate(
+    { blockName: parsed.blockName, unitNumber: parsed.unitNumber },
+    {
+      blockName: parsed.blockName,
+      unitNumber: parsed.unitNumber,
+      occupancyStatus: 'vacant',
+      isActive: true,
+    },
+    { upsert: true, new: true, setDefaultsOnInsert: true },
+  );
+};
+
 const register = async (req, res) => {
-  const { name, email, phone, password, unitId } = req.body;
+  const { name, email, phone, password, unitId, unitNumber } = req.body;
 
   const existing = await User.findOne({ email });
   if (existing) return sendError(res, 'Email already registered', null, 409);
 
+  const unit = await resolveRegistrationUnit({ unitId, unitNumber });
+  if ((unitId || unitNumber) && !unit) return sendError(res, 'Apartment/unit not found', null, 404);
+
   const passwordHash = await User.hashPassword(password);
   const user = await User.create({ name, email, phone, passwordHash, role: 'Resident', status: 'pending' });
 
-  if (unitId) {
-    await ResidentProfile.create({ user: user._id, unit: unitId });
+  if (unit) {
+    await ResidentProfile.create({ user: user._id, unit: unit._id });
   }
 
   return sendSuccess(res, 'Registration successful. Awaiting admin approval.', { userId: user._id }, 201);
@@ -122,6 +154,20 @@ const getMe = async (req, res) => {
   return sendSuccess(res, 'Profile fetched', user);
 };
 
+const updateMe = async (req, res) => {
+  const { name, phone } = req.body;
+  const update = {};
+  if (name !== undefined) update.name = name;
+  if (phone !== undefined) update.phone = phone;
+
+  const user = await User.findByIdAndUpdate(req.user._id, update, {
+    new: true,
+    runValidators: true,
+  });
+
+  return sendSuccess(res, 'Profile updated', user);
+};
+
 const changePassword = async (req, res) => {
   const { currentPassword, newPassword } = req.body;
 
@@ -136,4 +182,4 @@ const changePassword = async (req, res) => {
   return sendSuccess(res, 'Password changed successfully');
 };
 
-module.exports = { register, login, refresh, logout, forgotPassword, resetPassword, getMe, changePassword };
+module.exports = { register, login, refresh, logout, forgotPassword, resetPassword, getMe, updateMe, changePassword };

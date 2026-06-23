@@ -6,5 +6,5 @@ export const complaintAPI = {
   assignedToMe: (params) => api.get('/complaints/assigned/me', { params }),
   list: (params) => api.get('/complaints', { params }),
   updateStatus: (id, payload) => api.patch(`/complaints/${id}/status`, payload),
-  feedback: (id, payload) => api.patch(`/complaints/${id}/feedback`, payload),
+  feedback: (id, payload) => api.post(`/complaints/${id}/feedback`, payload),
 };

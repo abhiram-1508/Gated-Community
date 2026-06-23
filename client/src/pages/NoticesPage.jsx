@@ -6,14 +6,14 @@ import { AlertTriangle, CalendarDays, Megaphone, Pin, Plus } from 'lucide-react'
 import PageHeader from '../components/PageHeader';
 import useApiData from '../hooks/useApiData';
 import api from '../services/api';
-import { demoNotices } from '../data/demo';
 import { showToast } from '../store/uiSlice';
+import { asList } from '../utils/apiData';
 
 export default function NoticesPage(){
   const role=useSelector(s=>s.auth.user?.role);const isAdmin=['Admin','SuperAdmin'].includes(role);
-  const {data,setData}=useApiData('/announcements',demoNotices);const notices=Array.isArray(data)?data:data.items||demoNotices;
+  const {data,setData}=useApiData('/announcements',[]);const notices=asList(data);
   const [open,setOpen]=useState(false);const [filter,setFilter]=useState('all');const [form,setForm]=useState({title:'',body:'',type:'notice',audience:'all',eventDate:'',isPinned:false});const dispatch=useDispatch();
-  const create=async(e)=>{e.preventDefault();let n;try{const {data:r}=await api.post('/announcements',form);n=r.data;}catch{n={...form,_id:`n-${Date.now()}`,createdAt:new Date().toISOString()};}setData([n,...notices]);setOpen(false);dispatch(showToast({message:'Announcement published'}));};
+  const create=async(e)=>{e.preventDefault();try{const {data:r}=await api.post('/announcements',form);setData([r.data,...notices]);setOpen(false);dispatch(showToast({message:'Announcement published'}));}catch(err){dispatch(showToast({message:err.response?.data?.message||'Announcement could not be published',severity:'error'}));}};
   const visible=filter==='all'?notices:notices.filter(n=>n.type===filter);
   return <><PageHeader eyebrow="Community updates" title="Notice board" description="Important announcements, upcoming events and urgent community alerts." action={isAdmin?<button onClick={()=>setOpen(true)} className="btn-primary"><Plus size={18}/> Create notice</button>:null}/>
     <div className="mb-6 flex flex-wrap gap-2">{['all','notice','event','emergency'].map(x=><button key={x} onClick={()=>setFilter(x)} className={`rounded-full px-4 py-2 text-sm font-bold capitalize ${filter===x?'bg-brand-600 text-white':'bg-white text-slate-500 dark:bg-slate-900'}`}>{x}</button>)}</div>

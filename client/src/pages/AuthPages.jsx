@@ -27,7 +27,7 @@ export function LoginPage() {
   const navigate = useNavigate();
   const { loading, error } = useSelector((s) => s.auth);
   const [show, setShow] = useState(false);
-  const [form, setForm] = useState({ email: 'resident@smartcommunity.demo', password: 'password123', demoRole: 'Resident' });
+  const [form, setForm] = useState({ email: '', password: '' });
   const submit = async (e) => {
     e.preventDefault();
     const result = await dispatch(login(form));
@@ -37,7 +37,6 @@ export function LoginPage() {
     <form className="mt-8 space-y-5" onSubmit={submit}>
       <label className="block"><span className="mb-2 block text-sm font-bold">Email address</span><input className="field" type="email" required value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></label>
       <label className="block"><div className="mb-2 flex justify-between"><span className="text-sm font-bold">Password</span><button type="button" className="text-sm font-bold text-brand-600">Forgot password?</button></div><div className="relative"><input className="field pr-12" type={show?'text':'password'} required value={form.password} onChange={e=>setForm({...form,password:e.target.value})}/><button type="button" onClick={()=>setShow(!show)} className="absolute right-4 top-3.5 text-slate-400">{show?<EyeOff size={19}/>:<Eye size={19}/>}</button></div></label>
-      <div className="rounded-2xl border border-blue-100 bg-blue-50 p-4"><div className="mb-2 text-xs font-bold uppercase tracking-wider text-brand-600">Demo workspace</div><select className="w-full bg-transparent text-sm font-bold outline-none" value={form.demoRole} onChange={e=>setForm({...form,demoRole:e.target.value})}><option value="Resident">Resident</option><option value="Admin">Admin</option><option value="Guard">Security</option><option value="Staff">Maintenance Staff</option></select></div>
       {error && <div className="rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-600">{error}</div>}
       <label className="flex items-center gap-2 text-sm text-slate-500"><input type="checkbox" defaultChecked className="accent-brand-600"/> Remember me on this device</label>
       <button className="btn-primary w-full" disabled={loading}>{loading?<CircularProgress size={20} color="inherit"/>:<><LockKeyhole size={18}/> Sign in securely</>}</button>
@@ -49,9 +48,9 @@ export function LoginPage() {
 export function RegisterPage() {
   const navigate = useNavigate();
   const [message, setMessage] = useState('');
-  const [form,setForm]=useState({name:'',email:'',phone:'',unitId:'',password:'',confirm:''});
-  const submit=async(e)=>{e.preventDefault(); if(form.password!==form.confirm){setMessage('Passwords do not match.');return;} try{await api.post('/auth/register',{name:form.name,email:form.email,phone:form.phone,password:form.password,...(form.unitId&&{unitId:form.unitId})});setMessage('Registration submitted. An admin will approve your account.');setTimeout(()=>navigate('/login'),1800);}catch(err){setMessage(err.response?.data?.message || 'Demo registration saved. You can now explore the sign-in page.');}};
+  const [form,setForm]=useState({name:'',email:'',phone:'',unitNumber:'',password:'',confirm:''});
+  const submit=async(e)=>{e.preventDefault(); if(form.password!==form.confirm){setMessage('Passwords do not match.');return;} try{await api.post('/auth/register',{name:form.name,email:form.email,phone:form.phone,password:form.password,...(form.unitNumber&&{unitNumber:form.unitNumber})});setMessage('Registration submitted. An admin will approve your account.');setTimeout(()=>navigate('/login'),1800);}catch(err){setMessage(err.response?.data?.message || 'Registration failed. Please try again.');}};
   return <AuthFrame title="Join your community" subtitle="Create your resident account. Admin approval may be required."><form className="mt-8 grid gap-4 sm:grid-cols-2" onSubmit={submit}>
-    {[['Full name','name','text'],['Email','email','email'],['Phone','phone','tel'],['Apartment / Unit ID','unitId','text'],['Password','password','password'],['Confirm password','confirm','password']].map(([label,key,type])=><label key={key} className="block"><span className="mb-2 block text-sm font-bold">{label}</span><input className="field" type={type} required={!['phone','unitId'].includes(key)} value={form[key]} onChange={e=>setForm({...form,[key]:e.target.value})}/></label>)}
+    {[['Full name','name','text'],['Email','email','email'],['Phone','phone','tel'],['Apartment number','unitNumber','text'],['Password','password','password'],['Confirm password','confirm','password']].map(([label,key,type])=><label key={key} className="block"><span className="mb-2 block text-sm font-bold">{label}</span><input className="field" type={type} required={!['phone','unitNumber'].includes(key)} placeholder={key==='unitNumber'?'A1289':''} value={form[key]} onChange={e=>setForm({...form,[key]:e.target.value})}/></label>)}
     {message&&<div className="sm:col-span-2 rounded-xl bg-blue-50 p-3 text-sm font-semibold text-brand-700">{message}</div>}<button className="btn-primary sm:col-span-2" type="submit">Create resident account</button></form><p className="mt-7 text-center text-sm text-slate-500">Already registered? <Link to="/login" className="font-bold text-brand-600">Sign in</Link></p></AuthFrame>;
 }
